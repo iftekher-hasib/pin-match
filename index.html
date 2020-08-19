@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="pin-display" class="form-control" type="text">
+                    <button id="pin-generate" class="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input id="input-display" class="form-control" type="text">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div id="but-7" class="button">7</div>
+                              <div id="but-8" class="button">8</div>
+                              <div id="but-9" class="button">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div id="but-4" class="button">4</div>
+                              <div id="but-5" class="button">5</div>
+                              <div id="but-6" class="button">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div id="but-1" class="button">1</div>
+                              <div id="but-2" class="button">2</div>
+                              <div id="but-3" class="button">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div onclick="document.getElementById('input-display').value=document.getElementById('input-display').value.slice(0,-1)" id="but-del" class="button"><</div>
+                                <div id="but-0" class="button">0</div>
+                                <div id="but-clr" class="button">C</div>
+                            </div>
+                            <div>
+                                <button id="submit-btn" type="submit" class="submit-btn">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section">
+            <p id="pin-not-match" class="notify">❌ Pin Didn't Match, Please try again</p>
+            <p id="pin-match" class="notify">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+</body>
+<script>
+    // pin generator
+    document.getElementById('pin-generate').addEventListener('click', function() {
+    document.getElementById('input-display').value='';
+    document.getElementById('pin-display').value=Math.floor(1000+Math.random()*9000);
+    })
+
+    // clr btn
+    document.getElementById('but-clr').addEventListener('click', function() {
+    document.getElementById('input-display').value='';
+    })
+
+    // pin display
+    displayDigit('but-1');
+    displayDigit('but-2');
+    displayDigit('but-3');
+    displayDigit('but-4');
+    displayDigit('but-5');
+    displayDigit('but-6');
+    displayDigit('but-7');
+    displayDigit('but-8');
+    displayDigit('but-9');
+    displayDigit('but-0');
+
+    function displayDigit(id) {
+        document.getElementById(id).addEventListener('click', function() {
+            document.getElementById('input-display').value += document.getElementById(id).innerText;
+        })
+    }
+
+    // submit btn
+    document.getElementById('submit-btn').addEventListener('click', function() {
+    document.getElementById('pin-match').style.display='none';
+    document.getElementById('pin-not-match').style.display='none';
+
+    if (document.getElementById('pin-display').value == document.getElementById('input-display').value && document.getElementById('pin-display').value !='') {
+        document.getElementById('pin-match').style.display='block'
+    } else {
+        document.getElementById('pin-not-match').style.display='block'
+    }
+    })
+</script>
+</html>
